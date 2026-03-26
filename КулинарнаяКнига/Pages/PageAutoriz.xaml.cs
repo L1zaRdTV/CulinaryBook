@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using КулинарнаяКнига.AppData;
@@ -24,14 +25,21 @@ namespace КулинарнаяКнига.Pages
                 return;
             }
 
-            var user = AppConnect.model0db.Authors.FirstOrDefault(x => x.Login == login && x.Password == password);
-            if (user == null)
+            try
             {
-                MessageBox.Show("Пользователь не найден.", "Вход", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
+                var user = AppConnect.model0db.Authors.FirstOrDefault(x => x.Login == login && x.Password == password);
+                if (user == null)
+                {
+                    MessageBox.Show("Пользователь не найден.", "Вход", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-            AppFrame.framemain.Navigate(new PageOutput());
+                AppFrame.framemain.Navigate(new PageOutput());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)

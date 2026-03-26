@@ -31,9 +31,17 @@ namespace КулинарнаяКнига.Pages
                 return;
             }
 
-            if (AppConnect.model0db.Authors.Any(x => x.Login == TextLogin.Text.Trim()))
+            try
             {
-                MessageBox.Show("Такой логин уже занят.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (AppConnect.model0db.Authors.Any(x => x.Login == TextLogin.Text.Trim()))
+                {
+                    MessageBox.Show("Такой логин уже занят.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка проверки логина", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -57,7 +65,7 @@ namespace КулинарнаяКнига.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Не удалось создать пользователя: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Не удалось создать пользователя: {DbErrorHelper.ToUserMessage(ex)}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

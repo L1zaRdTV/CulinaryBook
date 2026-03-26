@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +22,16 @@ namespace КулинарнаяКнига.Pages
             ComboSort.Items.Clear();
 
             ComboFilter.Items.Add("Все категории");
-            foreach (var category in AppConnect.model0db.Categories.OrderBy(x => x.CategoryName))
+            try
             {
-                ComboFilter.Items.Add(category.CategoryName);
+                foreach (var category in AppConnect.model0db.Categories.OrderBy(x => x.CategoryName))
+                {
+                    ComboFilter.Items.Add(category.CategoryName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка загрузки категорий", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             ComboSort.Items.Add("Без сортировки");
@@ -41,7 +49,17 @@ namespace КулинарнаяКнига.Pages
 
         private Recipes[] GetRecipes()
         {
-            List<Recipes> recipes = AppConnect.model0db.Recipes.ToList();
+            List<Recipes> recipes;
+            try
+            {
+                recipes = AppConnect.model0db.Recipes.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка загрузки рецептов", MessageBoxButton.OK, MessageBoxImage.Error);
+                tbCounter.Text = "Ничего не найдено";
+                return Array.Empty<Recipes>();
+            }
 
             var searchText = TextSearch.Text?.Trim().ToLower();
             if (!string.IsNullOrWhiteSpace(searchText))
