@@ -21,15 +21,22 @@ namespace КулинарнаяКнига.Pages
 
         private void Fill()
         {
-            CategoryCombo.ItemsSource = AppConnect.model0db.Categories
-                .OrderBy(x => x.CategoryName)
-                .Select(x => x.CategoryName)
-                .ToList();
+            try
+            {
+                CategoryCombo.ItemsSource = AppConnect.model0db.Categories
+                    .OrderBy(x => x.CategoryName)
+                    .Select(x => x.CategoryName)
+                    .ToList();
 
-            AuthorCombo.ItemsSource = AppConnect.model0db.Authors
-                .OrderBy(x => x.AuthorName)
-                .Select(x => x.AuthorName)
-                .ToList();
+                AuthorCombo.ItemsSource = AppConnect.model0db.Authors
+                    .OrderBy(x => x.AuthorName)
+                    .Select(x => x.AuthorName)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка загрузки данных", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
             CategoryCombo.SelectedIndex = CategoryCombo.Items.Count > 0 ? 0 : -1;
             AuthorCombo.SelectedIndex = AuthorCombo.Items.Count > 0 ? 0 : -1;
@@ -60,8 +67,18 @@ namespace КулинарнаяКнига.Pages
                 return;
             }
 
-            var category = AppConnect.model0db.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text);
-            var author = AppConnect.model0db.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text);
+            Authors author;
+            Categories category;
+            try
+            {
+                category = AppConnect.model0db.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text);
+                author = AppConnect.model0db.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка чтения данных", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             if (category == null || author == null)
             {
                 MessageBox.Show("Не удалось определить категорию или автора.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -84,7 +101,7 @@ namespace КулинарнаяКнига.Pages
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
