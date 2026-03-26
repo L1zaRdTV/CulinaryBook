@@ -1,39 +1,48 @@
 ﻿<Page x:Class="КулинарнаяКнига.Pages.PageReg"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:КулинарнаяКнига.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageReg">
+      Title="Регистрация">
 
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="White"/>
-                <GradientStop Color="#FFB92B2B" Offset="1"/>
-                <GradientStop Color="#FFCA9494" Offset="0.277"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <TextBlock HorizontalAlignment="Left" Margin="314,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" Width="146" Foreground="#FF242188" FontSize="20" FontFamily="Arial Black"><Run Language="ru-ru" Text="Регистрация"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="221,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="219" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Text="Введите имя автор"/><Run Language="ru-ru" Text="а"/></TextBlock>
-        <TextBox x:Name="TextName" HorizontalAlignment="Left" Margin="220,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="334" Height="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="222,93,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="219" Foreground="#FF282582" FontSize="16" FontFamily="Arial Black"><Run Text="Введите "/><Run Language="ru-ru" Text="логин"/></TextBlock>
-        <TextBox x:Name="TextLogin" HorizontalAlignment="Left" Margin="220,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="334" Height="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="221,139,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="219" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Text="Введите "/><Run Language="ru-ru" Text="пароль"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="221,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="17" Width="333" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Text="Введите "/><Run Text="пароль повторно"/></TextBlock>
-        <DatePicker x:Name="Bid" HorizontalAlignment="Left" Margin="220,256,0,0" VerticalAlignment="Top" Width="167" Height="22"/>
-        <TextBlock HorizontalAlignment="Left" Margin="222,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="165" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Language="ru-ru" Text="Дата рождения"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="405,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="149" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Language="ru-ru" Text="Стаж"/></TextBlock>
-        <TextBox x:Name="Stag" HorizontalAlignment="Left" Margin="405,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" Height="16"/>
-        <PasswordBox x:Name="TextPass" HorizontalAlignment="Left" Margin="221,161,0,0" VerticalAlignment="Top" Width="332" RenderTransformOrigin="0.03,0.329" Height="16" PasswordChanged="TextPass_PasswordChanged"/>
-        <PasswordBox x:Name="TextPassV" HorizontalAlignment="Left" Margin="221,205,0,0" VerticalAlignment="Top" Width="332" RenderTransformOrigin="0.03,0.329" Height="16" PasswordChanged="TextPassV_PasswordChanged"/>
-        <TextBlock HorizontalAlignment="Left" Margin="220,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="219" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Text="Введите "/><Run Language="ru-ru" Text="почту"/></TextBlock>
-        <TextBox x:Name="TextMail" HorizontalAlignment="Left" Margin="220,308,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="334" Height="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="222,335,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="17" Width="219" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black"><Run Text="Введите "/><Run Language="ru-ru" Text="телефон"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-        <TextBox x:Name="TextNum" HorizontalAlignment="Left" Margin="222,356,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332" Height="16"/>
-        <Button x:Name="RegAppliy" Content="Зарегистрироватся" HorizontalAlignment="Left" Margin="220,382,0,0" VerticalAlignment="Top" Width="333" Height="25" Click="Button_Click"/>
-        <Button Content="Назад" HorizontalAlignment="Left" Margin="220,411,0,0" VerticalAlignment="Top" Width="333" Height="25" Click="Button_Click_1"/>
+    <Grid Background="#FFF5F1EC">
+        <Border Width="520" Padding="24" Background="White" CornerRadius="14" BorderBrush="#FFE1D8CF" BorderThickness="1"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.ColumnSpan="2" Text="Регистрация автора" FontSize="24" FontWeight="Bold" Margin="0,0,0,16" Foreground="#FF3A2A1C"/>
+
+                <TextBlock Grid.Row="1" Text="Имя" FontWeight="SemiBold"/>
+                <TextBox x:Name="TextName" Grid.Row="1" Grid.Column="1" Margin="10,0,0,10" Height="30"/>
+
+                <TextBlock Grid.Row="2" Text="Логин" FontWeight="SemiBold"/>
+                <TextBox x:Name="TextLogin" Grid.Row="2" Grid.Column="1" Margin="10,0,0,10" Height="30"/>
+
+                <TextBlock Grid.Row="3" Text="Пароль" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="TextPass" Grid.Row="3" Grid.Column="1" Margin="10,0,0,10" Height="30"/>
+
+                <TextBlock Grid.Row="4" Text="Повтор пароля" FontWeight="SemiBold"/>
+                <PasswordBox x:Name="TextPassV" Grid.Row="4" Grid.Column="1" Margin="10,0,0,10" Height="30"/>
+
+                <TextBlock Grid.Row="5" Text="Дата рождения" FontWeight="SemiBold"/>
+                <DatePicker x:Name="Bid" Grid.Row="5" Grid.Column="1" Margin="10,0,0,10" Height="30"/>
+
+                <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+                    <Button Content="Назад" Width="120" Height="34" Margin="0,0,10,0" Click="Back_Click"/>
+                    <Button x:Name="RegAppliy" Content="Создать" Width="140" Height="34" Background="#FFE39E54" BorderThickness="0" Foreground="White" FontWeight="SemiBold" Click="Register_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
