@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using КулинарнаяКнига.AppData;
 
 namespace КулинарнаяКнига.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для PageReg.xaml
-    /// </summary>
     public partial class PageReg : Page
     {
         public PageReg()
@@ -26,86 +13,57 @@ namespace КулинарнаяКнига.Pages
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Register_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(TextName.Text)
+                || string.IsNullOrWhiteSpace(TextLogin.Text)
+                || string.IsNullOrWhiteSpace(TextPass.Password)
+                || string.IsNullOrWhiteSpace(TextPassV.Password)
+                || !Bid.SelectedDate.HasValue)
+            {
+                MessageBox.Show("Заполните обязательные поля.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (TextPass.Password != TextPassV.Password)
+            {
+                MessageBox.Show("Пароли не совпадают.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (AppConnect.model0db.Authors.Any(x => x.Login == TextLogin.Text.Trim()))
+            {
+                MessageBox.Show("Такой логин уже занят.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var user = new Authors
+            {
+                AuthorName = TextName.Text.Trim(),
+                Login = TextLogin.Text.Trim(),
+                Password = TextPass.Password,
+                Biday = Bid.SelectedDate.Value,
+                Email = string.Empty,
+                Phone = string.Empty,
+                Stazh = 0
+            };
+
             try
             {
-                if (AppConnect.model0db.Authors.Count(x => x.Login == TextLogin.Text) > 0)
-                {
-                    MessageBox.Show("Пользователь с таким логином уже есть!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-                if(String.IsNullOrEmpty(TextLogin.Text) || String.IsNullOrEmpty(TextName.Text) || String.IsNullOrEmpty(TextPass.Password) ||
-                    String.IsNullOrWhiteSpace(TextPassV.Password) || String.IsNullOrWhiteSpace(TextName.Text) || String.IsNullOrWhiteSpace(TextLogin.Text) ||
-                    String.IsNullOrWhiteSpace(TextMail.Text) || String.IsNullOrWhiteSpace(TextNum.Text) || String.IsNullOrWhiteSpace(Stag.Text) || !Bid.SelectedDate.HasValue)
-                {
-                    MessageBox.Show("Не заполнены все поля!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-
-                if (!int.TryParse(Stag.Text, out int workExperience) || workExperience < 0)
-                {
-                    MessageBox.Show("Стаж должен быть целым неотрицательным числом.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-                
-                Authors userobj = new Authors()
-                {
-                    Login = TextLogin.Text,
-                    AuthorName = TextName.Text,
-                    Password = TextPass.Password,
-                    Biday = Bid.SelectedDate.Value,
-                    Stazh = workExperience,
-                    Email = TextMail.Text,
-                    Phone = TextNum.Text
-                };
-                AppConnect.model0db.Authors.Add(userobj);
+                AppConnect.model0db.Authors.Add(user);
                 AppConnect.model0db.SaveChanges();
-                MessageBox.Show("Данные успешно добавлены!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
-                AppData.AppFrame.framemain.GoBack();
+                MessageBox.Show("Аккаунт создан.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
+                AppFrame.framemain.GoBack();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при добавлении данных!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Не удалось создать пользователя: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Back_Click(object sender, RoutedEventArgs e)
         {
             AppFrame.framemain.GoBack();
-        }
-
-        private void TextPass_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (TextPass.Password != TextPassV.Password)
-            {
-                RegAppliy.IsEnabled = false;
-                TextPassV.Background = Brushes.LightCoral;
-                TextPassV.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                RegAppliy.IsEnabled = true;
-                TextPassV.Background = Brushes.LightGreen;
-                TextPassV.BorderBrush = Brushes.Green;
-            }
-        }
-
-        private void TextPassV_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (TextPass.Password != TextPassV.Password)
-            {
-                RegAppliy.IsEnabled = false;
-                TextPassV.Background = Brushes.LightCoral;
-                TextPassV.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                RegAppliy.IsEnabled = true;
-                TextPassV.Background = Brushes.LightGreen;
-                TextPassV.BorderBrush = Brushes.Green;
-            }
         }
     }
 }
