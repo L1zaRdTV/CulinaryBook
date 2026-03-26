@@ -95,5 +95,13 @@ namespace КулинарнаяКнига.Pages
         {
             AppFrame.framemain.Navigate(new AddRecipes());
         }
+
+        private void EditRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is Button button) || !(button.DataContext is Recipes selectedRecipe))
+                return;
+
+            AppFrame.framemain.Navigate(new AddRecipes(selectedRecipe));
+        }
     }
 }

@@ -11,12 +11,16 @@ namespace КулинарнаяКнига.Pages
 {
     public partial class AddRecipes : Page
     {
-        private readonly Recipes recipes = new Recipes();
+        private readonly Recipes _editableRecipe;
+        private readonly bool _isEditMode;
 
-        public AddRecipes()
+        public AddRecipes(Recipes recipe = null)
         {
             InitializeComponent();
+            _isEditMode = recipe != null;
+            _editableRecipe = recipe ?? new Recipes();
             Fill();
+            FillRecipeData();
         }
 
         private void Fill()
@@ -38,8 +42,46 @@ namespace КулинарнаяКнига.Pages
                 MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка загрузки данных", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            CategoryCombo.SelectedIndex = CategoryCombo.Items.Count > 0 ? 0 : -1;
-            AuthorCombo.SelectedIndex = AuthorCombo.Items.Count > 0 ? 0 : -1;
+            if (!_isEditMode)
+            {
+                CategoryCombo.SelectedIndex = CategoryCombo.Items.Count > 0 ? 0 : -1;
+                AuthorCombo.SelectedIndex = AuthorCombo.Items.Count > 0 ? 0 : -1;
+            }
+        }
+
+        private void FillRecipeData()
+        {
+            if (_isEditMode)
+            {
+                PageTitleText.Text = "Редактирование рецепта";
+                SaveButton.Content = "Обновить";
+
+                RecipeNameText.Text = _editableRecipe.RecipeName;
+                DescriptionText.Text = _editableRecipe.Description;
+                CookingTimeText.Text = _editableRecipe.CookingTime?.ToString() ?? string.Empty;
+
+                var categoryName = _editableRecipe.Category?.CategoryName
+                                   ?? AppConnect.model0db.Categories
+                                       .Where(x => x.CategoryID == _editableRecipe.CategoryID)
+                                       .Select(x => x.CategoryName)
+                                       .FirstOrDefault();
+
+                var authorName = _editableRecipe.Author?.AuthorName
+                                 ?? AppConnect.model0db.Authors
+                                     .Where(x => x.AuthorID == _editableRecipe.AuthorID)
+                                     .Select(x => x.AuthorName)
+                                     .FirstOrDefault();
+
+                CategoryCombo.SelectedItem = categoryName;
+                AuthorCombo.SelectedItem = authorName;
+                RecipeNamePhoto.Text = _editableRecipe.image;
+
+                if (!string.IsNullOrWhiteSpace(_editableRecipe.image))
+                {
+                    var imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\.\\Images\\", _editableRecipe.image);
+                    LoadImage(imagePath);
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -85,18 +127,21 @@ namespace КулинарнаяКнига.Pages
                 return;
             }
 
-            recipes.RecipeName = RecipeNameText.Text.Trim();
-            recipes.Description = DescriptionText.Text.Trim();
-            recipes.CookingTime = cookingTime;
-            recipes.CategoryID = category.CategoryID;
-            recipes.AuthorID = author.AuthorID;
+            _editableRecipe.RecipeName = RecipeNameText.Text.Trim();
+            _editableRecipe.Description = DescriptionText.Text.Trim();
+            _editableRecipe.CookingTime = cookingTime;
+            _editableRecipe.CategoryID = category.CategoryID;
+            _editableRecipe.AuthorID = author.AuthorID;
 
-            AppConnect.model0db.Recipes.Add(recipes);
+            if (!_isEditMode)
+            {
+                AppConnect.model0db.Recipes.Add(_editableRecipe);
+            }
 
             try
             {
                 AppConnect.model0db.SaveChanges();
-                MessageBox.Show("Рецепт сохранён.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(_isEditMode ? "Рецепт обновлён." : "Рецепт сохранён.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
                 AppFrame.framemain.Navigate(new PageOutput());
             }
             catch (Exception ex)
@@ -132,7 +177,7 @@ namespace КулинарнаяКнига.Pages
                 var destinationPath = Path.Combine(imagesDirectory, photoName);
                 File.Copy(dialog.FileName, destinationPath, true);
 
-                recipes.image = photoName;
+                _editableRecipe.image = photoName;
                 RecipeNamePhoto.Text = photoName;
                 LoadImage(destinationPath);
             }

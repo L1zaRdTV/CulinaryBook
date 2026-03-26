@@ -61,13 +61,25 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <Border Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FFF6EEE7" CornerRadius="8" Padding="10">
-                                <TextBlock TextWrapping="Wrap" FontWeight="SemiBold">
-                                    <Run Text="Время: "/>
-                                    <Run Text="{Binding CookingTime}"/>
-                                    <Run Text=" мин"/>
-                                </TextBlock>
-                            </Border>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <Border Background="#FFF6EEE7" CornerRadius="8" Padding="10">
+                                    <TextBlock TextWrapping="Wrap" FontWeight="SemiBold">
+                                        <Run Text="Время: "/>
+                                        <Run Text="{Binding CookingTime}"/>
+                                        <Run Text=" мин"/>
+                                    </TextBlock>
+                                </Border>
+                                <Button Content="Редактировать"
+                                        Width="120"
+                                        Height="30"
+                                        Margin="0,8,0,0"
+                                        HorizontalAlignment="Right"
+                                        Background="#FFE39E54"
+                                        BorderThickness="0"
+                                        Foreground="White"
+                                        FontWeight="SemiBold"
+                                        Click="EditRecipe_Click"/>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>
