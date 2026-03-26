@@ -216,12 +216,6 @@
     <Resource Include="Images\macs.jpg" />
     <Resource Include="Images\eggs.jpg" />
     <Resource Include="recipe_book_cook_cooking_kitchen_fork_spoon_icon_142001.ico" />
-    <Resource Include="vecteezy_chef-hat-doodle-culinary-line-art-illustration_66601111.png" />
-    <Resource Include="Image5.png" />
-    <Resource Include="Image4.png" />
-    <Resource Include="Image3.png" />
-    <Resource Include="Image2.png" />
-    <Resource Include="Image1.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
