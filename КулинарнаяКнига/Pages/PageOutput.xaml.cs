@@ -52,7 +52,8 @@ namespace КулинарнаяКнига.Pages
             List<Recipes> recipes;
             try
             {
-                recipes = AppConnect.model0db.Recipes.ToList();
+                recipes = new RecipeQueryService(AppConnect.model0db)
+                    .GetRecipesWithAllData();
             }
             catch (Exception ex)
             {
@@ -70,7 +71,7 @@ namespace КулинарнаяКнига.Pages
             if (ComboFilter.SelectedIndex > 0)
             {
                 var selectedCategory = ComboFilter.SelectedItem as string;
-                recipes = recipes.Where(x => x.Categories.CategoryName == selectedCategory).ToList();
+                recipes = recipes.Where(x => x.Category.CategoryName == selectedCategory).ToList();
             }
 
             if (ComboSort.SelectedIndex == 1)

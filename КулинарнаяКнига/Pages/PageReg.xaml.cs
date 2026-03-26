@@ -50,10 +50,10 @@ namespace КулинарнаяКнига.Pages
                 AuthorName = TextName.Text.Trim(),
                 Login = TextLogin.Text.Trim(),
                 Password = TextPass.Password,
-                Biday = Bid.SelectedDate.Value,
+                ByDay = Bid.SelectedDate.Value,
                 Email = string.Empty,
-                Phone = string.Empty,
-                Stazh = 0
+                Telefon = string.Empty,
+                Stoge = 0
             };
 
             try
