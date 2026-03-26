@@ -32,40 +32,88 @@ namespace КулинарнаяКнига.Pages
 
         private void Fill()
         {
-            throw new NotImplementedException();
+            CategoryCombo.ItemsSource = AppConnect.model0db.Categories
+                .OrderBy(x => x.CategoryName)
+                .Select(x => x.CategoryName)
+                .ToList();
+
+            AuthorCombo.ItemsSource = AppConnect.model0db.Authors
+                .OrderBy(x => x.AuthorName)
+                .Select(x => x.AuthorName)
+                .ToList();
+
+            if (CategoryCombo.Items.Count > 0)
+                CategoryCombo.SelectedIndex = 0;
+
+            if (AuthorCombo.Items.Count > 0)
+                AuthorCombo.SelectedIndex = 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder sb = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(recipes.RecipeName))
+            if (string.IsNullOrWhiteSpace(RecipeNameText.Text))
             {
-                sb.Append("добавтье название!\\n");
+                sb.AppendLine("Добавьте название рецепта.");
             }
+
+            if (string.IsNullOrWhiteSpace(DescriptionText.Text))
+            {
+                sb.AppendLine("Добавьте описание рецепта.");
+            }
+
+            if (!int.TryParse(CookingTimeText.Text, out int cookingTime) || cookingTime <= 0)
+            {
+                sb.AppendLine("Укажите корректное время приготовления (в минутах).");
+            }
+
+            if (CategoryCombo.SelectedItem == null)
+            {
+                sb.AppendLine("Выберите категорию.");
+            }
+
+            if (AuthorCombo.SelectedItem == null)
+            {
+                sb.AppendLine("Выберите автора.");
+            }
+
             if (sb.Length > 0)
             {
-                MessageBox.Show(sb.ToString());
+                MessageBox.Show(sb.ToString(), "Проверьте данные", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                string messag = "Изменения сохарнены!";
+                string messag = "Изменения сохранены!";
                 if (recipes.RecipeID == 0)
                 {
-                    recipes.CategoryID = AppData.AppConnect.model0db.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text).CategoryID;
-                    recipes.AuthorID = AppData.AppConnect.model0db.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text).AuthorID;
+                    var category = AppData.AppConnect.model0db.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text);
+                    var author = AppData.AppConnect.model0db.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text);
+
+                    if (category == null || author == null)
+                    {
+                        MessageBox.Show("Не удалось определить категорию или автора.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    recipes.RecipeName = RecipeNameText.Text.Trim();
+                    recipes.Description = DescriptionText.Text.Trim();
+                    recipes.CookingTime = cookingTime;
+                    recipes.CategoryID = category.CategoryID;
+                    recipes.AuthorID = author.AuthorID;
 
                     AppConnect.model0db.Recipes.Add(recipes);
-                    messag = "запись добавлена";
+                    messag = "Рецепт успешно добавлен.";
                 }
 
                 try
                 {
                     AppConnect.model0db.SaveChanges();
-                    MessageBox.Show(messag);
+                    MessageBox.Show(messag, "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+                    AppFrame.framemain.Navigate(new PageOutput());
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

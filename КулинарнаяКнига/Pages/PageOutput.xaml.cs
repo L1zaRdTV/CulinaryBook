@@ -24,23 +24,27 @@ namespace КулинарнаяКнига.Pages
         public PageOutput()
         {
             InitializeComponent();
-            ListProducts.ItemsSource = AppConnect.model0db.Recipes.ToList();
             Fill();
+            ListProducts.ItemsSource = RecipesList();
         }
 
         public void Fill()
         {
+            ComboFilter.Items.Clear();
+            ComboSort.Items.Clear();
+
+            ComboFilter.Items.Add("Все категории");
             ComboSort.Items.Add("Время");
             ComboSort.Items.Add("По возрастанию времени приготовления");
             ComboSort.Items.Add("По убыванию времени приготовления");
-            ComboSort.SelectedIndex = 0;
-            ComboFilter.SelectedIndex = 0;
-            var category = AppConnect.model0db.Categories;
-            ComboFilter.Items.Add("Категория");
-            foreach (var item in category)
+
+            foreach (var item in AppConnect.model0db.Categories.OrderBy(x => x.CategoryName).ToList())
             {
                 ComboFilter.Items.Add(item.CategoryName);
             }
+
+            ComboSort.SelectedIndex = 0;
+            ComboFilter.SelectedIndex = 0;
         }
         //public string CurrentPhoto
         //{
@@ -69,39 +73,13 @@ namespace КулинарнаяКнига.Pages
 
                 if (ComboFilter.SelectedIndex > 0)
                 {
-                    switch (ComboFilter.SelectedIndex)
-                    {
-                        case 1:
-                            recipes = recipes.Where(x => x.CategoryID == 1).ToList();
-                            break;
-                        case 2:
-                            recipes = recipes.Where(x => x.CategoryID == 2).ToList();
-                            break;
-                        case 3:
-                            recipes = recipes.Where(x => x.CategoryID == 3).ToList();
-                            break;
-                        case 4:
-                            recipes = recipes.Where(x => x.CategoryID == 4).ToList();
-                            break;
-                        case 5:
-                            recipes = recipes.Where(x => x.CategoryID == 5).ToList();
-                            break;
-                        case 6:
-                            recipes = recipes.Where(x => x.CategoryID == 6).ToList();
-                            break;
-                        case 7:
-                            recipes = recipes.Where(x => x.CategoryID == 7).ToList();
-                            break;
-                        case 8:
-                            recipes = recipes.Where(x => x.CategoryID == 8).ToList();
-                            break;
-                        case 9:
-                            recipes = recipes.Where(x => x.CategoryID == 9).ToList();
-                            break;
-                        case 10:
-                            recipes = recipes.Where(x => x.CategoryID == 10).ToList();
-                            break;
+                    var selectedCategoryName = ComboFilter.SelectedItem as string;
+                    var selectedCategory = AppConnect.model0db.Categories
+                        .FirstOrDefault(x => x.CategoryName == selectedCategoryName);
 
+                    if (selectedCategory != null)
+                    {
+                        recipes = recipes.Where(x => x.CategoryID == selectedCategory.CategoryID).ToList();
                     }
                 }
                 if (ComboSort.SelectedIndex > 0)
@@ -150,9 +128,8 @@ namespace КулинарнаяКнига.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AppFrame.framemain.Navigate(new AddRecipes(null));
+            AppFrame.framemain.Navigate(new AddRecipes());
         }
     }
   
 }
-
