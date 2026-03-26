@@ -8,74 +8,75 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageOutput">
 
-    <Grid>
-        
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black"/>
-                <GradientStop Color="White" Offset="1"/>
-                <GradientStop Color="#FFCA9494" Offset="0.257"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Background="#FFF8F3EE">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="5*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="0">
-            <ComboBox x:Name="ComboFilter" Margin="5" VerticalAlignment="Center" Width="209" Height="26" SelectionChanged="ComboFilter_SelectionChanged"/>
-            <ComboBox x:Name="ComboSort" Margin="5" VerticalAlignment="Top" Width="120" Height="26" SelectionChanged="ComboSort_SelectionChanged"/>
-            <TextBox x:Name="TextSearch"  Margin="5" TextWrapping="Wrap" VerticalAlignment="Center" Width="186" Height="26" TextChanged="TextSearch_TextChanged"/>
-        </StackPanel>
+        <Border Grid.Row="0" Margin="20,20,20,10" Padding="12" Background="White" CornerRadius="12" BorderBrush="#FFDCCFC4" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <ComboBox x:Name="ComboFilter" Margin="0,0,10,0" VerticalAlignment="Center" Width="230" Height="30" SelectionChanged="ComboFilter_SelectionChanged"/>
+                <ComboBox x:Name="ComboSort" Margin="0,0,10,0" VerticalAlignment="Center" Width="260" Height="30" SelectionChanged="ComboSort_SelectionChanged"/>
+                <TextBox x:Name="TextSearch" Margin="0,0,10,0" VerticalAlignment="Center" Width="220" Height="30" TextChanged="TextSearch_TextChanged"/>
+                <Button x:Name="AddRecipes" Content="Добавить рецепт" Height="30" Width="140" Click="Button_Click" Background="#FFE39E54" BorderThickness="0" Foreground="White" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Border>
 
-        <ListView Grid.Row="1" x:Name="ListProducts" Margin="0,0,0,15">
+        <ListView Grid.Row="1" x:Name="ListProducts" Margin="20,0,20,10" BorderThickness="0" Background="Transparent">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                </Style>
+            </ListView.ItemContainerStyle>
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border>
-                    <Grid>
+                    <Border Padding="10" Background="White" CornerRadius="10" BorderBrush="#FFE8DDD4" BorderThickness="1">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="500"/>
-                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="170"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="180"/>
                             </Grid.ColumnDefinitions>
-                            <Border
-                        Width="200"
-                        Height="200"
-                        Margin="3"
-                        ClipToBounds="True"
-                        Grid.Column="0">
-                            <Image Source="{Binding CurrentPhoto}" Stretch="UniformToFill"/>
-                        </Border>
-                    <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left">
-                        <TextBlock Height="auto" Text="{Binding RecipeName}"/>
-                                <TextBlock TextWrapping="Wrap" Height="auto" Margin="0,0,0,10">
-                            <Run Text="Категория: "/>
-                            <Run Text="{Binding Categories.CategoryName}"/>
+
+                            <Border Width="160" Height="120" Margin="0,0,12,0" ClipToBounds="True" Grid.Column="0" CornerRadius="8">
+                                <Image Source="{Binding CurrentPhoto}" Stretch="UniformToFill"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                <TextBlock FontWeight="Bold" FontSize="16" Text="{Binding RecipeName}" Foreground="#FF3A2A1C"/>
+                                <TextBlock TextWrapping="Wrap" Margin="0,6,0,0">
+                                    <Run Text="Категория: "/>
+                                    <Run Text="{Binding Categories.CategoryName}"/>
                                 </TextBlock>
-                                <TextBlock TextWrapping="Wrap" Height="auto" Margin="0,0,0,10">
+                                <TextBlock TextWrapping="Wrap" Margin="0,6,0,0">
                                     <Run Text="Описание: "/>
                                     <Run Text="{Binding Description}"/>
                                 </TextBlock>
-                                <TextBlock TextWrapping="Wrap" Height="auto" Margin="0,0,0,10">
+                                <TextBlock TextWrapping="Wrap" Margin="0,6,0,0">
                                     <Run Text="Автор: "/>
                                     <Run Text="{Binding Authors.AuthorName}"/>
                                 </TextBlock>
                             </StackPanel>
-                            <StackPanel Grid.Column="2" Orientation="Vertical" HorizontalAlignment="Left">
-                                <TextBlock TextWrapping="Wrap" Height="auto" Margin="0,0,0,10">
-                                    <Run Text="Время готовки: "/>
+
+                            <Border Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#FFF6EEE7" CornerRadius="8" Padding="10">
+                                <TextBlock TextWrapping="Wrap" FontWeight="SemiBold">
+                                    <Run Text="Время: "/>
                                     <Run Text="{Binding CookingTime}"/>
-                                    <Run Text=" минут"/>
+                                    <Run Text=" мин"/>
                                 </TextBlock>
-                            </StackPanel>
+                            </Border>
                         </Grid>
-                  </Border>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBlock x:Name="tbCounter" Grid.Row="2" />
-        <Button x:Name="AddRecipes" Content="" HorizontalAlignment="Left" Height="35" Margin="27,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="65" Click="Button_Click"/>
+
+        <Border Grid.Row="2" Margin="20,0,20,20" Padding="8" Background="White" CornerRadius="8" BorderBrush="#FFDCCFC4" BorderThickness="1">
+            <TextBlock x:Name="tbCounter" />
+        </Border>
+        
     </Grid>
 </Page>

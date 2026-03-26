@@ -37,9 +37,16 @@ namespace КулинарнаяКнига.Pages
                 }
 
                 if(String.IsNullOrEmpty(TextLogin.Text) || String.IsNullOrEmpty(TextName.Text) || String.IsNullOrEmpty(TextPass.Password) ||
-                    String.IsNullOrWhiteSpace(TextPassV.Password) || String.IsNullOrWhiteSpace(TextName.Text) || String.IsNullOrWhiteSpace(TextLogin.Text) )
+                    String.IsNullOrWhiteSpace(TextPassV.Password) || String.IsNullOrWhiteSpace(TextName.Text) || String.IsNullOrWhiteSpace(TextLogin.Text) ||
+                    String.IsNullOrWhiteSpace(TextMail.Text) || String.IsNullOrWhiteSpace(TextNum.Text) || String.IsNullOrWhiteSpace(Stag.Text) || !Bid.SelectedDate.HasValue)
                 {
                     MessageBox.Show("Не заполнены все поля!", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                if (!int.TryParse(Stag.Text, out int workExperience) || workExperience < 0)
+                {
+                    MessageBox.Show("Стаж должен быть целым неотрицательным числом.", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 
@@ -49,7 +56,7 @@ namespace КулинарнаяКнига.Pages
                     AuthorName = TextName.Text,
                     Password = TextPass.Password,
                     Biday = Bid.SelectedDate.Value,
-                    Stazh = int.Parse(Stag.Text),
+                    Stazh = workExperience,
                     Email = TextMail.Text,
                     Phone = TextNum.Text
                 };

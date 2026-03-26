@@ -8,64 +8,53 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddRecipes">
 
-    <Grid Margin="0,0,0,-61">
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="White"/>
-                <GradientStop Color="#FFB92B2B" Offset="1"/>
-                <GradientStop Color="#FFCA9494" Offset="0.277"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Background="#FFF8F3EE">
+        <Border Margin="40" CornerRadius="14" Background="White" BorderBrush="#FFD8C9BB" BorderThickness="1">
+            <Grid Margin="24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
+                <TextBlock Grid.ColumnSpan="2" Text="Новый рецепт" FontSize="26" FontWeight="Bold" Foreground="#FF3A2A1C" Margin="0,0,0,16"/>
 
-        <TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" Width="240" Foreground="#FF242188" FontSize="20" FontFamily="Arial Black">
-            <Run Language="ru-ru" Text="Добавление данных"/>
-            <LineBreak/>
-            <Run Language="ru-ru" Text="рецепта"/>
-        </TextBlock>
+                <TextBlock Grid.Row="1" Text="Название рецепта" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <TextBox x:Name="RecipeNameText" Grid.Row="1" Margin="0,22,16,10" Height="30"/>
 
+                <TextBlock Grid.Row="2" Text="Описание" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <TextBox x:Name="DescriptionText" Grid.Row="2" Margin="0,22,16,10" Height="80" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
 
-        <TextBox x:Name="RecipeNameText" HorizontalAlignment="Center" Margin="0,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" Height="18"
-                 Text="{Binding recipes.RecipeName, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="252" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Text="Введите "/><Run Language="ru-ru" Text="название рецепта"/>
-        </TextBlock>
+                <TextBlock Grid.Row="3" Text="Категория" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <ComboBox x:Name="CategoryCombo" Grid.Row="3" Margin="0,22,16,10" Height="30"/>
 
+                <TextBlock Grid.Row="4" Text="Автор" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <ComboBox x:Name="AuthorCombo" Grid.Row="4" Margin="0,22,16,10" Height="30"/>
 
-        <TextBox x:Name="DescriptionText" HorizontalAlignment="Center" Margin="0,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" Height="58" AcceptsReturn="True"
-                 Text="{Binding recipes.CookingInstructions, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="252" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Text="Введите "/><Run Language="ru-ru" Text="описание рецепта"/>
-        </TextBlock>
+                <TextBlock Grid.Row="5" Text="Время приготовления (мин)" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <TextBox x:Name="CookingTimeText" Grid.Row="5" Margin="0,22,16,10" Height="30"/>
 
+                <TextBlock Grid.Row="6" Text="Файл изображения" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <TextBox x:Name="RecipeNamePhoto" Grid.Row="6" Margin="0,22,16,0" Height="30" IsReadOnly="True" Background="#FFF5F5F5"/>
 
-        <ComboBox x:Name="CategoryCombo" HorizontalAlignment="Center" Margin="0,242,0,0" VerticalAlignment="Top" Width="314" Height="18"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="277" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Text="В"/><Run Language="ru-ru" Text="ыберите"/><Run Text=" "/><Run Language="ru-ru" Text="категорию рецепта"/>
-        </TextBlock>
+                <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Margin="8,0,0,10" CornerRadius="10" BorderBrush="#FFE3D8CF" BorderThickness="1">
+                    <Image x:Name="RecipeImage" Stretch="UniformToFill"/>
+                </Border>
+                <Button x:Name="SelectImageBtn" Grid.Column="1" Grid.Row="5" Margin="8,22,0,10" Height="34" Content="📷 Выбрать фото" Click="SelectImage_Click"/>
 
-
-        <ComboBox x:Name="AuthorCombo" HorizontalAlignment="Center" Margin="0,286,0,0" VerticalAlignment="Top" Width="314" Height="18"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="157" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Language="ru-ru" Text="Выберите"/><Run Text=" автора"/>
-        </TextBlock>
-
-
-        <TextBox x:Name="CookingTimeText" HorizontalAlignment="Center" Margin="0,332,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" Height="18"
-                 Text="{Binding recipes.CookingTime, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,309,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="277" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Text="В"/><Run Text="ведите "/><Run Language="ru-ru" Text="время приготовления"/>
-        </TextBlock>
-
-
-        <Image x:Name="RecipeImage" HorizontalAlignment="Left" Height="114" Margin="626,33,0,0" VerticalAlignment="Top" Width="134" RenderTransformOrigin="0.478,1.562"/>
-        <Button x:Name="SelectImageBtn" Content="📷 Выбрать фото" HorizontalAlignment="Right" Margin="0,155,60,0" VerticalAlignment="Top" Width="100" Height="30" Click="SelectImage_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="243,355,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Width="277" Foreground="#FF242188" FontSize="16" FontFamily="Arial Black">
-            <Run Language="ru-ru" Text="Выберите картинку"/>
-        </TextBlock>
-
-
-        <Button Content="Сохранить" HorizontalAlignment="Left" Height="25" Margin="322,415,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
-        <TextBox x:Name="RecipeNamePhoto" HorizontalAlignment="Center" Margin="0,378,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314"/>
+                <StackPanel Grid.ColumnSpan="2" Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,50,0,0">
+                    <Button Content="Назад" Width="120" Height="34" Margin="0,0,10,0" Click="ggg_Click"/>
+                    <Button Content="Сохранить" Width="140" Height="34" Background="#FFE39E54" BorderThickness="0" Foreground="White" FontWeight="SemiBold" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

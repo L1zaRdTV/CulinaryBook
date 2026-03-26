@@ -113,6 +113,7 @@
     <Compile Include="AppData\RecipeIngredients.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="AppData\RecipesPartial.cs" />
     <Compile Include="AppData\Recipes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
