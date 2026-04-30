@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using КулинарнаяКнига.AppData;
+using КулинарнаяКнига.ApplicationData;
 
 namespace КулинарнаяКнига.Pages
 {
@@ -24,7 +25,7 @@ namespace КулинарнаяКнига.Pages
             ComboFilter.Items.Add("Все категории");
             try
             {
-                foreach (var category in AppConnect.model0db.Categories.OrderBy(x => x.CategoryName))
+                foreach (var category in AppConnect.model01.Categories.OrderBy(x => x.CategoryName))
                 {
                     ComboFilter.Items.Add(category.CategoryName);
                 }
@@ -52,7 +53,7 @@ namespace КулинарнаяКнига.Pages
             List<Recipes> recipes;
             try
             {
-                recipes = new RecipeQueryService(AppConnect.model0db)
+                recipes = new RecipeQueryService(AppConnect.model01)
                     .GetRecipesWithAllData();
             }
             catch (Exception ex)

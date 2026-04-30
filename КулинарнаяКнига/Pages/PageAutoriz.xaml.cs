@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using КулинарнаяКнига.AppData;
+using КулинарнаяКнига.ApplicationData;
 
 namespace КулинарнаяКнига.Pages
 {
@@ -27,7 +28,7 @@ namespace КулинарнаяКнига.Pages
 
             try
             {
-                var user = AppConnect.model0db.Authors.FirstOrDefault(x => x.Login == login && x.Password == password);
+                var user = AppConnect.model01.Authors.FirstOrDefault(x => x.Login == login && x.Password == password);
                 if (user == null)
                 {
                     MessageBox.Show("Пользователь не найден.", "Вход", MessageBoxButton.OK, MessageBoxImage.Warning);
