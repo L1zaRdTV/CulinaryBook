@@ -4,9 +4,6 @@
              xmlns:local="clr-namespace:КулинарнаяКнига"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
-    <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/AppStyles.xaml"/>
