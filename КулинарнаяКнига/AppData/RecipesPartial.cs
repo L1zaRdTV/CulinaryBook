@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 
 namespace КулинарнаяКнига.AppData
 {
@@ -8,12 +9,20 @@ namespace КулинарнаяКнига.AppData
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(image))
+                if (!string.IsNullOrEmpty(image))
                 {
-                    return @"/Images/empty.png";
+                    string path = Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "..\\..\\Images\\",
+                        image);
+
+                    if (File.Exists(path))
+                    {
+                        return path;
+                    }
                 }
 
-                return @"/Images/" + image;
+                return "/Images/empty.png";
             }
         }
     }

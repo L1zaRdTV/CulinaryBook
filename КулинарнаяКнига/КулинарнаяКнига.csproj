@@ -230,12 +230,14 @@
     <Compile Include="Pages\AddEditRecipePage.xaml.cs"><DependentUpon>AddEditRecipePage.xaml</DependentUpon></Compile>
     <Compile Include="Pages\FavoritesPage.xaml.cs"><DependentUpon>FavoritesPage.xaml</DependentUpon></Compile>
     <Compile Include="Pages\CookingStepsPage.xaml.cs"><DependentUpon>CookingStepsPage.xaml</DependentUpon></Compile>
+    <Compile Include="Pages\PageLike.xaml.cs"><DependentUpon>PageLike.xaml</DependentUpon></Compile>
     <Page Include="Pages\LoginPage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Pages\RegisterPage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Pages\RecipesPage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Pages\AddEditRecipePage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Pages\FavoritesPage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Pages\CookingStepsPage.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
+    <Page Include="Pages\PageLike.xaml"><SubType>Designer</SubType><Generator>MSBuild:Compile</Generator></Page>
     <Page Include="Resources\AppStyles.xaml"><Generator>MSBuild:Compile</Generator><SubType>Designer</SubType></Page>
 </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

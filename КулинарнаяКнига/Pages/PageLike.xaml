@@ -1,0 +1,33 @@
+<Page x:Class="КулинарнаяКнига.Pages.PageLike"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Избранные рецепты">
+    <DockPanel Margin="10">
+        <Button DockPanel.Dock="Bottom" Margin="0,10,0,0" Content="Назад" Click="Back_Click" Style="{StaticResource MagicButtonStyle}"/>
+
+        <ListView x:Name="listProducts">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,8" Padding="8" BorderBrush="#DDD" BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="180"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Width="90" Height="90" Stretch="UniformToFill" Source="{Binding CurrentPhoto}"/>
+                            <StackPanel Grid.Column="1" Margin="10,0">
+                                <TextBlock Text="{Binding RecipeName}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Category.CategoryName, StringFormat=Категория: {0}}"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxHeight="42"/>
+                                <TextBlock Text="{Binding CookingTime, StringFormat=Время: {0} мин}"/>
+                            </StackPanel>
+                            <Button x:Name="btnDelete" Grid.Column="2" VerticalAlignment="Center" Content="Удалить из избранного"
+                                    Tag="{Binding}" Click="btnDelete_Click" Style="{StaticResource MagicButtonStyle}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+</Page>
