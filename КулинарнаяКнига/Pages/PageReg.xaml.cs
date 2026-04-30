@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using КулинарнаяКнига.AppData;
+using КулинарнаяКнига.ApplicationData;
 
 namespace КулинарнаяКнига.Pages
 {
@@ -33,7 +34,7 @@ namespace КулинарнаяКнига.Pages
 
             try
             {
-                if (AppConnect.model0db.Authors.Any(x => x.Login == TextLogin.Text.Trim()))
+                if (AppConnect.model01.Authors.Any(x => x.Login == TextLogin.Text.Trim()))
                 {
                     MessageBox.Show("Такой логин уже занят.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
@@ -58,8 +59,8 @@ namespace КулинарнаяКнига.Pages
 
             try
             {
-                AppConnect.model0db.Authors.Add(user);
-                AppConnect.model0db.SaveChanges();
+                AppConnect.model01.Authors.Add(user);
+                AppConnect.model01.SaveChanges();
                 MessageBox.Show("Аккаунт создан.", "Регистрация", MessageBoxButton.OK, MessageBoxImage.Information);
                 AppFrame.framemain.GoBack();
             }

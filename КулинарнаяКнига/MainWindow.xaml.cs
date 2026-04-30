@@ -1,6 +1,5 @@
-using System.Windows;
+﻿using System.Windows;
 using КулинарнаяКнига.ApplicationData;
-using КулинарнаяКнига.AppData;
 using КулинарнаяКнига.Pages;
 
 namespace КулинарнаяКнига

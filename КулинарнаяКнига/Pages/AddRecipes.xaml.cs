@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using КулинарнаяКнига.AppData;
+using КулинарнаяКнига.ApplicationData;
 
 namespace КулинарнаяКнига.Pages
 {
@@ -27,12 +28,12 @@ namespace КулинарнаяКнига.Pages
         {
             try
             {
-                CategoryCombo.ItemsSource = AppConnect.model0db.Categories
+                CategoryCombo.ItemsSource = AppConnect.model01.Categories
                     .OrderBy(x => x.CategoryName)
                     .Select(x => x.CategoryName)
                     .ToList();
 
-                AuthorCombo.ItemsSource = AppConnect.model0db.Authors
+                AuthorCombo.ItemsSource = AppConnect.model01.Authors
                     .OrderBy(x => x.AuthorName)
                     .Select(x => x.AuthorName)
                     .ToList();
@@ -61,13 +62,13 @@ namespace КулинарнаяКнига.Pages
                 CookingTimeText.Text = _editableRecipe.CookingTime?.ToString() ?? string.Empty;
 
                 var categoryName = _editableRecipe.Category?.CategoryName
-                                   ?? AppConnect.model0db.Categories
+                                   ?? AppConnect.model01.Categories
                                        .Where(x => x.CategoryID == _editableRecipe.CategoryID)
                                        .Select(x => x.CategoryName)
                                        .FirstOrDefault();
 
                 var authorName = _editableRecipe.Author?.AuthorName
-                                 ?? AppConnect.model0db.Authors
+                                 ?? AppConnect.model01.Authors
                                      .Where(x => x.AuthorID == _editableRecipe.AuthorID)
                                      .Select(x => x.AuthorName)
                                      .FirstOrDefault();
@@ -113,8 +114,8 @@ namespace КулинарнаяКнига.Pages
             Categories category;
             try
             {
-                category = AppConnect.model0db.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text);
-                author = AppConnect.model0db.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text);
+                category = AppConnect.model01.Categories.FirstOrDefault(x => x.CategoryName == CategoryCombo.Text);
+                author = AppConnect.model01.Authors.FirstOrDefault(x => x.AuthorName == AuthorCombo.Text);
             }
             catch (Exception ex)
             {
@@ -135,12 +136,12 @@ namespace КулинарнаяКнига.Pages
 
             if (!_isEditMode)
             {
-                AppConnect.model0db.Recipes.Add(_editableRecipe);
+                AppConnect.model01.Recipes.Add(_editableRecipe);
             }
 
             try
             {
-                AppConnect.model0db.SaveChanges();
+                AppConnect.model01.SaveChanges();
                 MessageBox.Show(_isEditMode ? "Рецепт обновлён." : "Рецепт сохранён.", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
                 AppFrame.framemain.Navigate(new PageOutput());
             }

@@ -71,9 +71,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AppData\AppConnect.cs" />
     <Compile Include="AppData\AppFrame.cs" />
     <Compile Include="AppData\DbErrorHelper.cs" />
+    <Compile Include="AppData\RecipeQueryService.cs" />
     <Compile Include="AppData\Authors.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
