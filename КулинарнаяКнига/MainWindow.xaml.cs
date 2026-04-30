@@ -1,5 +1,5 @@
-﻿using System;
 using System.Windows;
+using КулинарнаяКнига.ApplicationData;
 using КулинарнаяКнига.AppData;
 using КулинарнаяКнига.Pages;
 
@@ -10,20 +10,9 @@ namespace КулинарнаяКнига
         public MainWindow()
         {
             InitializeComponent();
-            try
-            {
-                AppConnect.model0db = new CulinaryBookEntities();
-                AppConnect.model0db.Database.Connection.Open();
-                AppConnect.model0db.Database.Connection.Close();
-
-                AppFrame.framemain = Mainframe;
-                Mainframe.Navigate(new PageAutoriz());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(DbErrorHelper.ToUserMessage(ex), "Ошибка подключения к БД", MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-            }
+            AppConnect.model01 = new CulinaryBookEntities();
+            AppFrame.frmMain = FrmMain;
+            FrmMain.Navigate(new LoginPage());
         }
     }
 }

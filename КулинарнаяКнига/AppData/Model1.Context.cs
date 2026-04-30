@@ -20,6 +20,7 @@ namespace КулинарнаяКнига.AppData
         public virtual DbSet<Tags> Tags { get; set; }
         public virtual DbSet<RecipeTags> RecipeTags { get; set; }
         public virtual DbSet<Reviews> Reviews { get; set; }
+        public virtual DbSet<LikeRecipes> LikeRecipes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -189,6 +190,21 @@ namespace КулинарнаяКнига.AppData
             modelBuilder.Entity<Reviews>()
                 .Property(x => x.Rating)
                 .HasColumnName("Rating");
+
+
+            modelBuilder.Entity<LikeRecipes>()
+                .ToTable("LikeRecipes")
+                .HasKey(x => x.id);
+
+            modelBuilder.Entity<LikeRecipes>()
+                .Property(x => x.id)
+                .HasColumnName("id");
+            modelBuilder.Entity<LikeRecipes>()
+                .Property(x => x.idAuthor)
+                .HasColumnName("idAuthor");
+            modelBuilder.Entity<LikeRecipes>()
+                .Property(x => x.idRecipes)
+                .HasColumnName("idRecipes");
 
             modelBuilder.Entity<Recipes>()
                 .HasRequired(x => x.Author)

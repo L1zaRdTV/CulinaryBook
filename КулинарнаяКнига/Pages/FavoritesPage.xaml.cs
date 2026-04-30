@@ -1,0 +1,3 @@
+using System.Linq;using System.Windows;using System.Windows.Controls;using КулинарнаяКнига.ApplicationData;
+namespace КулинарнаяКнига.Pages{public partial class FavoritesPage:Page{public FavoritesPage(){InitializeComponent();LoadData();}void LoadData(){lvFav.ItemsSource=AppConnect.model01.LikeRecipes.Where(x=>x.idAuthor==AppConnect.AuthorID).ToList();}
+void Del_Click(object s,RoutedEventArgs e){if(lvFav.SelectedItem is AppData.LikeRecipes l){AppConnect.model01.LikeRecipes.Remove(l);AppConnect.model01.SaveChanges();LoadData();}}void Back_Click(object s,RoutedEventArgs e){NavigationService?.Navigate(new RecipesPage());}}}
